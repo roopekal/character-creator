@@ -3,6 +3,7 @@ package fi.kallinen.charactercreator.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name="usertable")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

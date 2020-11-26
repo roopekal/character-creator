@@ -36,7 +36,7 @@ function roll(){
 	}
 	
 	console.log(rolls);
-	document.getElementById('output').innerHTML ="You rolled: " + rolls + " vs. " + ac;
+	document.getElementById('output').innerHTML ="You rolled: " + rolls + " vs. " + ac +" Armor Class";
 	if(dice == 20){
 		document.getElementById('result').innerHTML ="CRITICAL HIT"
 	}else if(rolls>=ac){
@@ -59,8 +59,8 @@ function roll(){
 		</form>
 	</div>
 	<div>
-	<button th:object="${characters}" type="button" class="btn btn-primary" th:onclick="|roll()|">Roll a Stat</button>
-	<p id="output">Press the button to roll a stat</p>
+	<button th:object="${characters}" type="button" class="btn btn-primary" th:onclick="|roll()|">Roll to attack a dummy!</button>
+	<p id="output">Press the button attack a target!</p>
 	<p id="result"></p>
 	</div>
 <table class="table table-striped">

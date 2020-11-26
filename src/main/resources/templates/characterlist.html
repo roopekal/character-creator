@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>My Character Creator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Characters</h1>
+<div class="col-md-4" style="padding:20px 0">
+<div class="col-md-4">
+		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<td>Player</td>
+				<td>Character's name</td>
+				<td>Character's Level</td>				
+				<td>Character's Class</td>
+				<td></td>
+				
+			</tr>
+			<tr th:each="character : ${characters}">
+				<td th:text="${character.player}">Player</td>
+				<td th:text="${character.chname}">Character</td>				
+				<td th:text="${character.level}">Level</td>				
+				<td th:text="${character.chclass.clname}" >Class</td>
+				
+				
+				<td >
+				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/delete/{id}(id=${character.id})}" class="btn btn-danger">Delete</a> 
+					<a th:href="@{/edit/{id}(id=${character.id})}">Edit</a>
+					<a th:href="@{/viewcharacter/{id}(id=${character.id})}">View Character</a>
+					</td>
+					
+			</tr>
+		</tbody>
+	</table>
+	<a href="/add" class="btn btn-success">Create a Character</a>
+
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add a Character</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+	var output = document.getElementById('output');
+function randomointi(){
+	return Math.floor(Math.random()*6)+1;
+}
+
+function roll(){
+	
+	var dice1 = randomointi();
+	var dice2 = randomointi();
+	var dice3 = randomointi();
+	var dice4 = randomointi();
+	var rolls =   dice1+dice2+dice3;
+	
+	console.log(rolls);
+	document.getElementById('output').innerHTML = rolls;
+}
+
+/*]]>*/
+</script>
+	<h1>Add a Character</h1>
+	<div>
+	<form th:object="${character}"th:action="@{save}" action="#" method="post">
+	
+	<label for="playerlist">Player</label>
+				<select id="playerlist" th:field="*{player}" class="form-control">
+				<option th:each="player:${user}"
+				th:value="${player.username}"
+				th:text="${player.username}"
+				></option></select>
+	<br/>
+	<label for="chname">Character</label>
+	<input type="text"id="chname"th:field="*{chname}"/>
+	<br/>
+	<label for="level">Level</label>
+	<input type="text"id="level"th:field="*{level}"/>
+	<br/>
+		<br/>
+		
+	<button type="button" class="btn btn-primary" th:onclick="|roll()|">Roll a Stat</button>
+	<p id="output">Press the button to roll a stat</p>
+		<br/>
+		
+	<label for="strength">Strength</label>
+	<input type="text" id="strength"th:field="*{strength}"/>
+	
+	
+	<br/>
+	<label for="dexterity">Dexterity</label>
+	<input type="text" id="dexterity"th:field="*{dexterity}"/>
+
+	<br/>
+	<label for="constitution">Constitution</label>
+	<input type="text" id="constitution"th:field="*{constitution}"/>
+	
+	<br/>
+	<label for="intelligence">Intelligence</label>
+	<input type="text" id="intelligence"th:field="*{intelligence}"/>
+	
+	<br/>
+	<label for="wisdom">Wisdom</label>
+	<input type="text" id="wisdom"th:field="*{wisdom}"/>
+
+	<br/>
+	<label for="charisma">Charisma</label>
+	<input type="text" id="charisma"th:field="*{charisma}"/>
+	
+	<br/>
+	<label for="catlist">Class</label>
+				<select id="classlist" th:field="*{chclass}" class="form-control">
+				<option th:each="chclass:${classes}"
+				th:value="${chclass.classid}"
+				th:text="${chclass.clname}"
+				></option></select>
+	<input type="submit" value="Save"></input>
+	
+	</form>
+	
+	</div>
+</body>

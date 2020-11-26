@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>My Character Creator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+	var output = document.getElementById('output');
+function randomointi(){
+	return Math.floor(Math.random()*20)+1;
+}
+
+function roll(){
+	var profBonus = 2;
+	var dice = randomointi();
+	var strength = /*[[${characters.strength}]]*/ 'default';
+	var strMod = (strength-10)/2;
+	var rolls =   dice+Math.round(strMod)+profBonus;
+	var level = /*[[${characters.level}]]*/ 'default';
+	var ac = 15+Math.round(level/2);
+	
+	if(level >= 5){
+		var profBonus=3;
+	} else if(level >= 9){
+		var profBonus=4;
+	} else if(level >= 13){
+		var profBonus=5;
+	} else if(level >= 17){
+		var profBonus=6;
+	} else {
+		var profBonus=2;
+	}
+	
+	console.log(rolls);
+	document.getElementById('output').innerHTML ="You rolled: " + rolls + " vs. " + ac;
+	if(dice == 20){
+		document.getElementById('result').innerHTML ="CRITICAL HIT"
+	}else if(rolls>=ac){
+		document.getElementById('result').innerHTML ="You hit the target!"
+	}else {
+		document.getElementById('result').innerHTML ="You missed, better luck next time."
+	}
+}
+
+/*]]>*/
+</script>
+<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/characterlist}" method="post">
+			<input type="submit" value="Go Back" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
+	<div>
+	<button th:object="${characters}" type="button" class="btn btn-primary" th:onclick="|roll()|">Roll a Stat</button>
+	<p id="output">Press the button to roll a stat</p>
+	<p id="result"></p>
+	</div>
+<table class="table table-striped">
+		<tbody th:object="${characters}">
+		
+	
+	
+			 <tr><td>Player</td><td th:text="*{player}"></td></tr> </br>
+			<tr><td>Character's name </td><td th:text="*{chname}"></td></tr> </br>
+			<tr><td>Character's Level </td><td th:text="*{level}"></td></tr> </br>
+			<tr><td>Character's Class </td><td th:text="*{chclass.clname}"></td></tr></br>
+			<tr><td>Strength</td><td th:text="*{strength}"></td></tr>
+			<tr><td>Dexterity</td><td th:text="*{dexterity}"></td></tr>
+			<tr><td>Constitution</td><td th:text="*{constitution}"></td></tr>
+			<tr><td>Intelligence</td><td th:text="*{intelligence}"></td></tr>
+			<tr><td>Wisdom</td><td th:text="*{wisdom}"></td></tr>
+			<tr><td>Charisma</td><td th:text="*{charisma}"></td></tr>
+			
+			
+		</tbody>
+	</table>
+
+</body>
+</html>
